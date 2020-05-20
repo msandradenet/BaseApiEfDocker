@@ -1,0 +1,21 @@
+# Please refer https://aka.ms/HTTPSinContainer on how to setup an https developer certificate for your ASP .NET Core service.
+version: '3.4'
+
+services:
+  BaseApiEfDocker:
+    image: BaseApiEfDocker
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 80
+    networks:
+      - dockersql-network
+    depends_on:
+      - db
+
+  db:
+    container_name: dockersql.database
+    image: microsoft/mssql-server-linux:latest
+    networks:
+      - dockersql-network
